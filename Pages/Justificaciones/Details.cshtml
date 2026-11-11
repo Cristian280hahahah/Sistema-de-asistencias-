@@ -1,0 +1,31 @@
+﻿@page
+@model SistemaAsistencia.Pages.Justificaciones.DetailsModel
+
+@{
+    ViewData["Title"] = "Detalles de Justificación";
+    var estado = Model.Justificacion.Estado.ToString();
+    var badgeClass = estado == "Aprobado" ? "status-approved" : estado == "Rechazado" ? "status-rejected" : "status-pending";
+}
+
+<div class="mb-4">
+    <span class="section-eyebrow">FICHA DE SOLICITUD</span>
+    <h1 class="h2 fw-bold mb-1">Detalles de la justificación</h1>
+    <p class="text-secondary mb-0">Información completa de la solicitud registrada.</p>
+</div>
+<div class="row justify-content-center"><div class="col-12 col-lg-9">
+    <div class="card border-0 shadow-sm rounded-4 detail-card"><div class="card-body p-4 p-md-5">
+        <div class="d-flex flex-column flex-sm-row justify-content-between gap-3 mb-4">
+            <div><div class="small text-secondary">ESTUDIANTE</div><div class="h4 fw-bold mb-0">@(Model.Justificacion.Asistencia?.Estudiante?.Nombre ?? "—")</div></div>
+            <span class="badge rounded-pill @badgeClass align-self-start">@estado</span>
+        </div>
+        <dl class="row mb-0 detail-list">
+            <dt class="col-sm-4"><i class="bi bi-people me-2"></i>Aula</dt><dd class="col-sm-8">@(Model.Justificacion.Asistencia?.Seccion?.Aula?.Nombre ?? "—")</dd>
+            <dt class="col-sm-4"><i class="bi bi-calendar3 me-2"></i>Fecha de asistencia</dt><dd class="col-sm-8">@Model.Justificacion.Asistencia?.Fecha.ToString("dd/MM/yyyy")</dd>
+            <dt class="col-sm-4"><i class="bi bi-chat-left-text me-2"></i>Motivo</dt><dd class="col-sm-8 text-break">@Model.Justificacion.Motivo</dd>
+        </dl>
+        <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+            <a asp-page="./Edit" asp-route-id="@Model.Justificacion.Id" class="btn btn-primary"><i class="bi bi-pencil-square me-2"></i>Editar / Evaluar</a>
+            <a asp-page="./Index" class="btn btn-light"><i class="bi bi-arrow-left me-2"></i>Volver al listado</a>
+        </div>
+    </div></div>
+</div></div>

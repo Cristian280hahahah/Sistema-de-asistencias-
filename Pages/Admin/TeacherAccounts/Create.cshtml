@@ -1,0 +1,22 @@
+@page
+@model SistemaAsistencia.Pages.Admin.TeacherAccounts.CreateModel
+@{
+    ViewData["Title"] = "Crear acceso de profesor";
+}
+<div class="form-page-header mb-4"><span class="section-eyebrow">ADMINISTRACIÓN DE ACCESOS</span><h1 class="h2 fw-bold mb-1">Crear acceso de profesor</h1><p class="text-secondary mb-0">La cuenta quedará asociada automáticamente al perfil docente.</p></div>
+@if (Model.Professor is not null)
+{
+    <div class="row justify-content-center"><div class="col-12 col-lg-8 col-xl-7"><div class="card form-card form-admin border-0 shadow-sm rounded-4"><div class="form-card-heading"><span class="form-heading-icon"><i class="bi bi-person-workspace"></i></span><div><h2 class="h5 fw-bold mb-1">@Model.Professor.Name</h2><p class="small text-secondary mb-0">Perfil de profesor</p></div></div><div class="card-body p-4 p-md-5">
+        <div class="student-login-email mb-4"><span class="small text-secondary d-block mb-1">CORREO PARA INICIAR SESIÓN</span><strong><i class="bi bi-envelope me-2"></i>@Model.Professor.Email</strong><p class="form-text mb-0 mt-2">El nombre y correo se toman del perfil y no se pueden cambiar aquí.</p></div>
+        <form method="post" class="account-form"><input type="hidden" asp-for="ProfessorId" /><div asp-validation-summary="ModelOnly" class="alert alert-danger border-0" role="alert"></div>
+            <div class="mb-3"><label asp-for="Input.Password" class="form-label fw-semibold">Contraseña temporal</label><input asp-for="Input.Password" class="form-control" autocomplete="new-password" placeholder="Mínimo 8 caracteres" /><div class="form-text">Debe tener al menos 8 caracteres e incluir mayúscula, minúscula, número y símbolo. Entrégala por un canal seguro.</div><span asp-validation-for="Input.Password" class="text-danger small"></span></div>
+            <div class="mb-4"><label asp-for="Input.ConfirmPassword" class="form-label fw-semibold">Confirmar contraseña</label><input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" /><span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span></div>
+            <div class="form-actions"><button type="submit" class="btn btn-primary"><i class="bi bi-person-check me-2"></i>Crear cuenta vinculada</button><a asp-page="Index" class="btn btn-light"><i class="bi bi-arrow-left me-2"></i>Cancelar</a></div>
+        </form>
+    </div></div></div></div>
+}
+else
+{
+    <div class="alert alert-danger border-0">No se encontró el perfil del profesor.</div>
+}
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

@@ -1,0 +1,30 @@
+﻿@page
+@model SistemaAsistencia.Pages.Justificaciones.DeleteModel
+
+@{
+    ViewData["Title"] = "Eliminar Justificación";
+}
+
+<div class="mb-4">
+    <span class="section-eyebrow">GESTIÓN DE SOLICITUDES</span>
+    <h1 class="h2 fw-bold mb-1">Eliminar justificación</h1>
+    <p class="text-secondary mb-0">Confirma que deseas eliminar este registro.</p>
+</div>
+<div class="row justify-content-center"><div class="col-12 col-lg-8">
+    <div class="card border-0 shadow-sm rounded-4"><div class="card-body p-4 p-md-5">
+        <div class="alert alert-danger border-0 shadow-sm" role="alert">
+            <div class="d-flex gap-3"><i class="bi bi-exclamation-triangle-fill fs-4"></i><div><h2 class="h5 fw-bold">Esta acción no se puede deshacer</h2><p class="mb-0">¿Estás seguro de que deseas eliminar esta solicitud de justificación?</p></div></div>
+        </div>
+        <dl class="row detail-list mb-4">
+            <dt class="col-sm-3">Estudiante</dt><dd class="col-sm-9">@(Model.Justificacion.Asistencia?.Estudiante?.Nombre ?? "—")</dd>
+            <dt class="col-sm-3">Aula</dt><dd class="col-sm-9">@(Model.Justificacion.Asistencia?.Seccion?.Aula?.Nombre ?? "—")</dd>
+            <dt class="col-sm-3">Motivo</dt><dd class="col-sm-9">@Model.Justificacion.Motivo</dd>
+            <dt class="col-sm-3">Estado</dt><dd class="col-sm-9">@Model.Justificacion.Estado</dd>
+        </dl>
+        <form method="post" asp-route-id="@Model.Justificacion.Id" class="form-actions">
+            <input type="hidden" name="id" value="@Model.Justificacion.Id" />
+            <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-2"></i>Eliminar definitivamente</button>
+            <a asp-page="./Index" class="btn btn-light"><i class="bi bi-x-lg me-2"></i>Cancelar</a>
+        </form>
+    </div></div>
+</div></div>

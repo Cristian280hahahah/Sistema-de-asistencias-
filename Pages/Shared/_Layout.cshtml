@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SistemaAsistencia</title>
+    <script type="importmap"></script>
+    <script>
+        try {
+            const savedTheme = localStorage.getItem('sistema-asistencia-theme');
+            const savedNavigation = localStorage.getItem('sistema-asistencia-navigation');
+            document.documentElement.dataset.theme = savedTheme === 'dark' ? 'dark' : 'light';
+            document.documentElement.dataset.navLayout = savedNavigation === 'vertical' ? 'vertical' : 'horizontal';
+        } catch {
+            document.documentElement.dataset.theme = 'light';
+            document.documentElement.dataset.navLayout = 'horizontal';
+        }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SistemaAsistencia.styles.css" asp-append-version="true" />
+</head>
+<body>
+    @if (!Context.Request.Path.StartsWithSegments("/Account/Login", StringComparison.OrdinalIgnoreCase))
+    {
+    <header>
+        <nav class="navbar navbar-expand-xl navbar-dark app-navbar shadow-sm">
+            <div class="container-fluid px-lg-4">
+                @if (User.IsInRole("Estudiante"))
+                {
+                    <a class="navbar-brand fw-bold" asp-page="/PortalEstudiante/Index"><i class="bi bi-mortarboard-fill me-2"></i>SistemaAsistencia</a>
+                }
+                else if (User.IsInRole("Profesor"))
+                {
+                    <a class="navbar-brand fw-bold" asp-page="/PortalProfesor/Index"><i class="bi bi-mortarboard-fill me-2"></i>SistemaAsistencia</a>
+                }
+                else
+                {
+                    <a class="navbar-brand fw-bold" asp-area="" asp-page="/Index"><i class="bi bi-mortarboard-fill me-2"></i>SistemaAsistencia</a>
+                }
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Mostrar navegación"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item"><a class="nav-link text-white fw-semibold" asp-page="/Index"><i class="bi bi-grid-1x2-fill me-1"></i>Panel</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-white fw-semibold dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-people-fill me-1"></i>Comunidad</a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                    <li><a class="dropdown-item" asp-page="/Estudiantes/Index"><i class="bi bi-person-badge me-2 text-primary"></i>Estudiantes</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Profesores/Index"><i class="bi bi-person-workspace me-2 text-primary"></i>Profesores</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-white fw-semibold dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-journal-bookmark-fill me-1"></i>Académico</a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                    <li><a class="dropdown-item" asp-page="/Materias/Index"><i class="bi bi-book me-2 text-primary"></i>Materias</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Secciones/Index"><i class="bi bi-collection me-2 text-primary"></i>Secciones</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Aulas/Index"><i class="bi bi-door-open me-2 text-primary"></i>Aulas</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-white fw-semibold dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-shield-lock me-1"></i>Administración</a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                    <li><a class="dropdown-item" asp-page="/Admin/Index"><i class="bi bi-gear me-2 text-primary"></i>Panel de cuentas</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Admin/StudentAccounts/Index"><i class="bi bi-person-lock me-2 text-primary"></i>Cuentas de estudiantes</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Admin/TeacherAccounts/Index"><i class="bi bi-person-workspace me-2 text-primary"></i>Cuentas de profesores</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else if (User.IsInRole("Profesor"))
+                        {
+                            <li class="nav-item"><a class="nav-link text-white fw-semibold" asp-page="/PortalProfesor/Index"><i class="bi bi-grid-1x2-fill me-1"></i>Mi portal</a></li>
+                            <li class="nav-item"><a class="nav-link text-white fw-semibold" asp-page="/Asistencias/Index"><i class="bi bi-calendar2-check me-1"></i>Asistencias</a></li>
+                            <li class="nav-item"><a class="nav-link text-white fw-semibold" asp-page="/Justificaciones/Index"><i class="bi bi-file-earmark-check me-1"></i>Justificaciones</a></li>
+                        }
+                        else if (User.IsInRole("Estudiante"))
+                        {
+                            <li class="nav-item"><a class="nav-link text-white fw-semibold" asp-page="/PortalEstudiante/Index"><i class="bi bi-grid-1x2-fill me-1"></i>Mi portal</a></li>
+                        }
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item dropdown ms-lg-2">
+                                <a class="nav-link navbar-user-link text-white fw-semibold dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="@User.Identity.Name"><i class="bi bi-person-circle me-1"></i>@User.Identity.Name</a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                    <li><a class="dropdown-item" asp-page="/Account/Settings"><i class="bi bi-sliders me-2 text-primary"></i>Configuración</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item ms-lg-2"><a class="nav-link text-white fw-semibold" asp-page="/Account/Login"><i class="bi bi-box-arrow-in-right me-1"></i>Iniciar sesión</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    }
+    <div class="container-fluid px-3 px-lg-5 py-4"><main role="main" class="pb-3">@RenderBody()</main></div>
+    <footer class="border-top footer text-muted py-3"><div class="container-fluid px-lg-5">&copy; 2026 - SistemaAsistencia <span class="mx-2">·</span> Gestión académica</div></footer>
+    <button type="button" class="theme-floating-toggle" data-theme-toggle aria-label="Cambiar al tema oscuro" title="Cambiar al tema oscuro">
+        <i class="bi bi-sun-fill" aria-hidden="true"></i>
+        <span class="visually-hidden">Cambiar tema</span>
+    </button>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

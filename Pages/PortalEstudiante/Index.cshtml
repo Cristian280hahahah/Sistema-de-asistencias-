@@ -1,0 +1,43 @@
+@page
+@model SistemaAsistencia.Pages.PortalEstudiante.IndexModel
+@{
+    ViewData["Title"] = "Portal del estudiante";
+}
+@if (string.IsNullOrEmpty(Model.Name))
+{
+    <div class="alert alert-warning border-0 shadow-sm" role="alert"><i class="bi bi-exclamation-circle me-2"></i>Tu cuenta todavía no está vinculada a un expediente. Contacta al administrador de la institución.</div>
+}
+else
+{
+    <section class="student-hero rounded-4 p-4 p-lg-5 mb-4"><div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3"><div><span class="hero-eyebrow"><i class="bi bi-mortarboard me-2"></i>PORTAL DEL ESTUDIANTE</span><h1 class="h2 fw-bold mt-2 mb-1">¡Hola, @Model.Name!</h1><p class="mb-0">Consulta tus clases y revisa tu historial de asistencia.</p></div><span class="student-code"><i class="bi bi-person-badge me-2"></i>@Model.Code</span></div></section>
+    <div class="row g-3 mb-4"><div class="col-6 col-md-4"><div class="card dashboard-stat h-100"><div class="card-body"><span class="stat-icon stat-blue"><i class="bi bi-collection"></i></span><div class="small text-secondary mt-3">Mis secciones</div><div class="h3 fw-bold mb-0">@Model.SectionCount</div></div></div></div><div class="col-6 col-md-4"><div class="card dashboard-stat h-100"><div class="card-body"><span class="stat-icon stat-green"><i class="bi bi-calendar2-check"></i></span><div class="small text-secondary mt-3">Registros de asistencia</div><div class="h3 fw-bold mb-0">@Model.AttendanceCount</div></div></div></div><div class="col-12 col-md-4"><div class="card dashboard-stat h-100"><div class="card-body"><span class="stat-icon stat-amber"><i class="bi bi-hourglass-split"></i></span><div class="small text-secondary mt-3">Justificaciones pendientes</div><div class="h3 fw-bold mb-0">@Model.PendingJustifications</div></div></div></div></div>
+    const int initialSectionLimit = 3;
+    var additionalSectionCount = Model.Sections.Count - initialSectionLimit;
+    <div class="row g-4">
+        <div class="col-12 col-xl-5">
+            <div class="d-flex align-items-center justify-content-between mb-3"><div><span class="section-eyebrow">HORARIO</span><h2 class="h5 fw-bold mb-0">Mis secciones</h2></div></div>
+            @if (Model.Sections.Count == 0)
+            {
+                <div class="card border-0 shadow-sm rounded-4"><div class="card-body text-center text-secondary py-4"><i class="bi bi-calendar-x fs-3 d-block mb-2"></i>No tienes secciones asignadas.</div></div>
+            }
+            else
+            {
+                <div class="student-sections-list" id="studentSectionsList">
+                    @foreach (var classSession in Model.Sections)
+                    {
+                        <article class="student-section-card mb-3"><div class="d-flex justify-content-between gap-3"><div><span class="section-eyebrow">@classSession.Day.NombreEnEspanol()</span><h3 class="h6 fw-bold mb-1">@classSession.Subject</h3><div class="small text-secondary"><i class="bi bi-geo-alt me-1"></i>@classSession.Name · @classSession.Teacher</div></div><span class="schedule-time"><i class="bi bi-clock me-1"></i>@classSession.Start.ToString(@"hh\:mm")–@classSession.End.ToString(@"hh\:mm")</span></div></article>
+                    }
+                </div>
+                @if (additionalSectionCount > 0)
+                {
+                    <button type="button" class="student-sections-toggle" data-section-toggle="studentSectionsList" data-collapsed-text="Ver otras secciones (@additionalSectionCount)" data-expanded-text="Mostrar menos secciones" aria-controls="studentSectionsList" aria-expanded="false">
+                        <span>Ver otras secciones (@additionalSectionCount)</span><i class="bi bi-chevron-down" aria-hidden="true"></i>
+                    </button>
+                }
+            }
+        </div>
+        <div class="col-12 col-xl-7"><div class="d-flex align-items-center justify-content-between mb-3"><div><span class="section-eyebrow">ACTIVIDAD RECIENTE</span><h2 class="h5 fw-bold mb-0">Mis asistencias</h2></div></div><div class="card border-0 shadow-sm rounded-4 overflow-hidden"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead class="table-light"><tr><th class="ps-4">Fecha</th><th>Sección</th><th>Hora</th><th>Estado</th><th class="pe-4">Justificación</th></tr></thead><tbody>
+        @if (Model.RecentAttendance.Count == 0) { <tr><td colspan="5" class="empty-state"><i class="bi bi-calendar2-x"></i><span>Aún no tienes asistencias registradas.</span></td></tr> }
+        @foreach (var attendance in Model.RecentAttendance) { var statusClass = attendance.Status == "Presente" ? "status-approved" : attendance.Status == "Ausente" ? "status-rejected" : attendance.Status == "Justificado" ? "status-blue" : "status-pending"; <tr><td class="ps-4">@attendance.Date.ToString("dd/MM/yyyy")</td><td>@attendance.Section</td><td>@attendance.Arrival.ToString(@"hh\:mm")</td><td><span class="badge rounded-pill @statusClass">@attendance.Status</span></td><td class="pe-4">@(attendance.JustificationStatus ?? "—")</td></tr> }
+        </tbody></table></div></div></div></div>
+}

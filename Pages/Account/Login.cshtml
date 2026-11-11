@@ -1,0 +1,42 @@
+@page
+@model SistemaAsistencia.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Iniciar sesión";
+
+}
+
+<div class="login-shell">
+    <div class="login-brand-panel">
+        <div class="login-brand-mark"><i class="bi bi-mortarboard-fill"></i></div>
+        <span class="hero-eyebrow">PORTAL ACADÉMICO</span>
+        <h1 class="display-6 fw-bold mt-3">Gestión educativa,<br />simple y segura.</h1>
+        <p>Accede a las herramientas institucionales para administrar clases, estudiantes y asistencia.</p>
+        <div class="login-security"><i class="bi bi-shield-lock-fill"></i><span>Acceso protegido con autenticación segura</span></div>
+    </div>
+    <div class="login-form-panel">
+        <div class="mb-4"><span class="section-eyebrow">BIENVENIDO</span><h2 class="h3 fw-bold mb-1">Iniciar sesión</h2><p class="text-secondary mb-0">Ingresa tus credenciales institucionales.</p></div>
+        <form method="post" asp-route-returnUrl="@Model.ReturnUrl" class="login-form">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 small" role="alert"></div>
+            <div class="mb-3"><label asp-for="Input.Email" class="form-label fw-semibold">Correo electrónico</label><div class="input-group"><span class="input-group-text bg-white"><i class="bi bi-envelope text-secondary"></i></span><input asp-for="Input.Email" type="email" class="form-control" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="nombre@institucion.edu" autofocus /></div><span asp-validation-for="Input.Email" class="text-danger small"></span></div>
+            <div class="mb-3"><label asp-for="Input.Password" class="form-label fw-semibold">Contraseña</label><div class="input-group"><span class="input-group-text bg-white"><i class="bi bi-lock text-secondary"></i></span><input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Tu contraseña" /><button class="btn btn-outline-secondary" type="button" id="togglePassword" aria-label="Mostrar contraseña"><i class="bi bi-eye"></i></button></div><span asp-validation-for="Input.Password" class="text-danger small"></span></div>
+            <div class="form-check mb-4"><input asp-for="Input.RememberMe" class="form-check-input" /><label asp-for="Input.RememberMe" class="form-check-label small"></label></div>
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold"><i class="bi bi-box-arrow-in-right me-2"></i>Entrar al sistema</button>
+        </form>
+        <p class="text-secondary small mt-4 mb-0"><i class="bi bi-info-circle me-1"></i>Si no tienes acceso, solicita una cuenta al administrador del sistema.</p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('togglePassword')?.addEventListener('click', function () {
+            const password = document.getElementById('Input_Password');
+            const icon = this.querySelector('i');
+            const visible = password.type === 'password';
+            password.type = visible ? 'text' : 'password';
+            icon.classList.toggle('bi-eye', !visible);
+            icon.classList.toggle('bi-eye-slash', visible);
+            this.setAttribute('aria-label', visible ? 'Ocultar contraseña' : 'Mostrar contraseña');
+        });
+    </script>
+}

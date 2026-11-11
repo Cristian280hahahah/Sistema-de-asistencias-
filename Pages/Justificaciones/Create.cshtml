@@ -1,0 +1,41 @@
+﻿@page
+@model SistemaAsistencia.Pages.Justificaciones.CreateModel
+
+@{
+    ViewData["Title"] = "Crear Justificación";
+}
+
+<div class="form-page-header mb-4">
+    <span class="section-eyebrow">NUEVA SOLICITUD</span>
+    <h1 class="h2 fw-bold mb-1">Solicitar justificación</h1>
+    <p class="text-secondary mb-0">Selecciona la inasistencia y explica brevemente el motivo.</p>
+</div>
+<div class="row justify-content-center"><div class="col-12 col-lg-8 col-xl-7">
+    <div class="card form-card form-justification border-0 shadow-sm rounded-4"><div class="card-body p-4 p-md-5">
+        <form method="post" class="entity-form">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <div class="mb-4">
+                <label asp-for="AsistenciaId" class="form-label fw-semibold"><i class="bi bi-calendar2-check me-2 text-primary"></i>Inasistencia a justificar</label>
+                <select asp-for="AsistenciaId" class="form-select" asp-items="ViewBag.AsistenciaId">
+                    <option value="">-- Selecciona estudiante y fecha --</option>
+                </select>
+                <div class="form-text">Cada opción muestra el nombre del estudiante, su sección y la fecha del registro.</div>
+                <span asp-validation-for="AsistenciaId" class="text-danger small"></span>
+            </div>
+            <div class="mb-4">
+                <label asp-for="Motivo" class="form-label fw-semibold"><i class="bi bi-chat-left-text me-2 text-primary"></i>Motivo o explicación</label>
+                <textarea asp-for="Motivo" class="form-control" rows="5" placeholder="Describe el motivo de la inasistencia..."></textarea>
+                <div class="form-text">Incluye la información necesaria para que la solicitud pueda ser evaluada.</div>
+                <span asp-validation-for="Motivo" class="text-danger small"></span>
+            </div>
+            <div class="form-actions mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-send me-2"></i>Enviar solicitud</button>
+                <a asp-page="./Index" class="btn btn-light"><i class="bi bi-arrow-left me-2"></i>Cancelar</a>
+            </div>
+        </form>
+    </div></div>
+</div></div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

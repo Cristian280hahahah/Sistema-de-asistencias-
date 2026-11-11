@@ -1,0 +1,91 @@
+@page
+@model SistemaAsistencia.Pages.Account.SettingsModel
+@{
+    ViewData["Title"] = "Configuración";
+}
+
+<div class="form-page-header mb-4">
+    <span class="section-eyebrow">PREFERENCIAS DE LA CUENTA</span>
+    <h1 class="h2 fw-bold mb-1">Configuración</h1>
+    <p class="text-secondary mb-0">Personaliza la apariencia y administra la seguridad de tu cuenta.</p>
+</div>
+
+<div class="row justify-content-center g-4">
+    <div class="col-12 col-xl-8">
+        <section class="card settings-card border-0 shadow-sm rounded-4 mb-4" aria-labelledby="appearance-title">
+            <div class="card-body p-4 p-md-5">
+                <div class="settings-section-heading">
+                    <span class="settings-icon"><i class="bi bi-circle-half"></i></span>
+                    <div>
+                        <h2 id="appearance-title" class="h5 fw-bold mb-1">Apariencia</h2>
+                        <p class="text-secondary mb-0">Elige el tema para todas las pantallas del sistema.</p>
+                    </div>
+                </div>
+                <div class="theme-options" role="group" aria-label="Tema de la aplicación">
+                    <button type="button" class="theme-option" data-theme-option="light" aria-pressed="true">
+                        <i class="bi bi-sun"></i>
+                        <span>Claro</span>
+                        <small>Fondo claro y alto contraste</small>
+                    </button>
+                    <button type="button" class="theme-option" data-theme-option="dark" aria-pressed="false">
+                        <i class="bi bi-moon-stars"></i>
+                        <span>Oscuro</span>
+                        <small>Fondo oscuro estilo editor</small>
+                    </button>
+                </div>
+                <p id="theme-status" class="small text-secondary mt-3 mb-0" role="status" aria-live="polite">La apariencia se guarda en este dispositivo.</p>
+            </div>
+        </section>
+
+        <section class="card settings-card border-0 shadow-sm rounded-4 mb-4" aria-labelledby="navigation-title">
+            <div class="card-body p-4 p-md-5">
+                <div class="settings-section-heading">
+                    <span class="settings-icon"><i class="bi bi-layout-sidebar-inset"></i></span>
+                    <div>
+                        <h2 id="navigation-title" class="h5 fw-bold mb-1">Diseño de navegación</h2>
+                        <p class="text-secondary mb-0">Elige cómo se muestran las opciones principales del sistema.</p>
+                    </div>
+                </div>
+                <div class="theme-options" role="group" aria-label="Diseño de navegación">
+                    <button type="button" class="theme-option" data-nav-layout-option="horizontal" aria-pressed="true">
+                        <i class="bi bi-layout-three-columns"></i>
+                        <span>Horizontal</span>
+                        <small>Barra superior tradicional</small>
+                    </button>
+                    <button type="button" class="theme-option" data-nav-layout-option="vertical" aria-pressed="false">
+                        <i class="bi bi-layout-sidebar-inset"></i>
+                        <span>Vertical</span>
+                        <small>Menú lateral en pantallas grandes</small>
+                    </button>
+                </div>
+                <p id="navigation-status" class="small text-secondary mt-3 mb-0" role="status" aria-live="polite">La preferencia se guarda en este dispositivo. En pantallas pequeñas se mantiene el menú adaptable.</p>
+            </div>
+        </section>
+
+        <section class="card settings-card border-0 shadow-sm rounded-4" aria-labelledby="account-title">
+            <div class="card-body p-4 p-md-5">
+                <div class="settings-section-heading mb-4">
+                    <span class="settings-icon settings-icon-security"><i class="bi bi-shield-lock"></i></span>
+                    <div>
+                        <h2 id="account-title" class="h5 fw-bold mb-1">Cuenta y seguridad</h2>
+                        <p class="text-secondary mb-0">Administra el acceso a tu cuenta.</p>
+                    </div>
+                </div>
+                <div class="settings-actions">
+                    <a asp-page="/Account/ChangePassword" class="settings-action">
+                        <span class="settings-action-icon"><i class="bi bi-key"></i></span>
+                        <span><strong>Cambiar contraseña</strong><small>Actualiza la clave de acceso de tu cuenta.</small></span>
+                        <i class="bi bi-chevron-right settings-action-arrow"></i>
+                    </a>
+                    <form method="post" asp-page="/Account/Logout" class="settings-logout-form">
+                        <button type="submit" class="settings-action settings-action-danger">
+                            <span class="settings-action-icon"><i class="bi bi-box-arrow-right"></i></span>
+                            <span><strong>Cerrar sesión</strong><small>Finaliza tu sesión en este dispositivo.</small></span>
+                            <i class="bi bi-chevron-right settings-action-arrow"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

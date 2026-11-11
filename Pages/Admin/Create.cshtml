@@ -1,0 +1,18 @@
+@page
+@model SistemaAsistencia.Pages.Admin.CreateModel
+@{
+    ViewData["Title"] = "Crear cuenta";
+}
+<div class="form-page-header mb-4"><span class="section-eyebrow">ADMINISTRACIÓN DE ACCESOS</span><h1 class="h2 fw-bold mb-1">Crear cuenta de usuario</h1><p class="text-secondary mb-0">Registra una cuenta para el personal que utilizará el portal.</p></div>
+<div class="row justify-content-center"><div class="col-12 col-lg-8 col-xl-7"><div class="card form-card form-admin border-0 shadow-sm rounded-4"><div class="card-body p-4 p-md-5">
+<form method="post" class="account-form">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0" role="alert"></div>
+    <div class="mb-3"><label asp-for="Input.Name" class="form-label fw-semibold"></label><input asp-for="Input.Name" class="form-control" autocomplete="name" placeholder="Nombre y apellido" /><span asp-validation-for="Input.Name" class="text-danger small"></span></div>
+    <div class="mb-3"><label asp-for="Input.Email" class="form-label fw-semibold">Correo institucional</label><input asp-for="Input.Email" type="email" class="form-control" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="nombre@institucion.edu" /><span asp-validation-for="Input.Email" class="text-danger small"></span></div>
+    <div class="mb-3"><label asp-for="Input.Password" class="form-label fw-semibold">Contraseña temporal</label><input asp-for="Input.Password" class="form-control" autocomplete="new-password" placeholder="Mínimo 8 caracteres" /><div class="form-text">Usa al menos 8 caracteres con mayúscula, minúscula, número y símbolo. Entrega la clave por un canal seguro y solicita que la cambien al iniciar sesión.</div><span asp-validation-for="Input.Password" class="text-danger small"></span></div>
+    <div class="mb-4"><label asp-for="Input.ConfirmPassword" class="form-label fw-semibold">Confirmar contraseña</label><input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" /><span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span></div>
+    <div class="alert alert-info border-0 mb-4"><i class="bi bi-shield-lock me-2"></i>Esta pantalla crea exclusivamente cuentas administradoras.</div>
+    <div class="form-actions"><button type="submit" class="btn btn-primary"><i class="bi bi-person-check me-2"></i>Crear cuenta</button><a asp-page="Index" class="btn btn-light"><i class="bi bi-arrow-left me-2"></i>Cancelar</a></div>
+</form>
+</div></div></div></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

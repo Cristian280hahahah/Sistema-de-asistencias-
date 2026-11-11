@@ -1,0 +1,44 @@
+﻿@page
+@model SistemaAsistencia.Pages.Justificaciones.EditModel
+
+@{
+    ViewData["Title"] = "Evaluar Justificación";
+}
+
+<div class="form-page-header mb-4">
+    <span class="section-eyebrow">REVISIÓN DE SOLICITUD</span>
+    <h1 class="h2 fw-bold mb-1">Evaluar justificación</h1>
+    <p class="text-secondary mb-0">Revisa los datos y actualiza el estado de la solicitud.</p>
+</div>
+<div class="row justify-content-center"><div class="col-12 col-lg-8 col-xl-7">
+    <div class="card form-card form-justification border-0 shadow-sm rounded-4"><div class="card-body p-4 p-md-5">
+        <form method="post" class="entity-form">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-4">
+                <label class="form-label fw-semibold"><i class="bi bi-person-vcard me-2 text-primary"></i>Estudiante y asistencia</label>
+                <input class="form-control bg-light" value="@Model.DetalleAsistencia" disabled />
+                <div class="form-text">La asistencia asociada a esta solicitud no se puede cambiar.</div>
+            </div>
+            <div class="mb-4">
+                <label class="form-label fw-semibold"><i class="bi bi-chat-left-text me-2 text-primary"></i>Motivo</label>
+                <div class="form-control bg-light" role="textbox" aria-readonly="true">@Model.Justificacion.Motivo</div>
+                <div class="form-text">El motivo y la asistencia asociada no se pueden cambiar.</div>
+            </div>
+            <div class="mb-4">
+                <label asp-for="Estado" class="form-label fw-semibold"><i class="bi bi-check2-square me-2 text-primary"></i>Estado de la solicitud</label>
+                <select asp-for="Estado" class="form-select" asp-items="Html.GetEnumSelectList<SistemaAsistencia.Models.EstadoJustificacion>()"></select>
+                <div class="form-text">Selecciona si la solicitud queda pendiente, aprobada o rechazada.</div>
+                <span asp-validation-for="Estado" class="text-danger small"></span>
+            </div>
+            <div class="form-actions mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-2"></i>Guardar cambios</button>
+                <a asp-page="./Index" class="btn btn-light"><i class="bi bi-arrow-left me-2"></i>Cancelar</a>
+            </div>
+        </form>
+    </div></div>
+</div></div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
